@@ -3,8 +3,11 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-# Load model
-model = tf.keras.models.load_model("my-model.keras")
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model("my_model.keras")
+
+model = load_model()
 
 st.title("♻️ Waste Classification App")
 

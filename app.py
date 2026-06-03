@@ -1,3 +1,8 @@
+st.set_page_config(
+    page_title="Waste Classification AI",
+    page_icon="♻️",
+    layout="centered"
+)
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -49,3 +54,18 @@ if uploaded_file is not None:
     })
 
     st.write(df)
+    st.markdown("""
+### AI-Based Waste Classification
+
+Upload an image of waste material and the AI model will classify it into:
+
+- Glass
+- Metal
+- Paper
+- Plastic
+
+Developed by Baron Ningthoujam
+""")
+st.markdown(
+    "[📂 View Source Code](https://github.com/baronningthoujam109-max/baron_waste_app)"
+)

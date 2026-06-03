@@ -30,9 +30,10 @@ if uploaded_file is not None:
     img_array = np.expand_dims(img_array, axis=0)
 
     prediction = model.predict(img_array)
-    st.write("Raw Prediction:")
-    st.write(prediction)
+   st.write("### Class Probabilities")
 
+   for cls, prob in zip(class_names, prediction[0]):
+    st.write(f"{cls}: {prob*100:.2f}%")
 
     predicted_class = class_names[np.argmax(prediction)]
     confidence = np.max(prediction) * 100
@@ -42,3 +43,11 @@ if uploaded_file is not None:
 
     st.write("Raw Prediction:")
     st.write(prediction)
+    import pandas as pd
+
+df = pd.DataFrame({
+    "Class": class_names,
+    "Probability (%)": prediction[0] * 100
+})
+
+st.write(df)

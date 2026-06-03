@@ -22,7 +22,34 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
 
-    image = Image.open(uploaded_file).convert("RGB")
+   uploaded_file.seek(0)
+image = Image.open(uploaded_file)
+image = image.convert("RGB")
+from PIL import Image, UnidentifiedImageError
+
+if uploaded_file is not None:
+    try:
+        uploaded_file.seek(0)
+
+        image = Image.open(uploaded_file)
+        image = image.convert("RGB")
+
+        st.image(image, caption="Uploaded Image")
+
+    except UnidentifiedImageError:
+        st.error("The uploaded file is not a valid image.")
+        st.write("Filename:", uploaded_file.name)
+st.write("Type:", uploaded_file.type)
+st.write("Size:", uploaded_file.size)
+from io import BytesIO
+
+if uploaded_file is not None:
+
+    image_bytes = uploaded_file.getvalue()
+
+    image = Image.open(BytesIO(image_bytes))
+    image = image.convert("RGB")
+    st.write("File size:", uploaded_file.size)
 
     st.image(image, caption="Uploaded Image")
 

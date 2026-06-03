@@ -1,3 +1,14 @@
+import streamlit as st
+import tensorflow as tf
+import numpy as np
+import pandas as pd
+from PIL import Image
+
+st.set_page_config(
+    page_title="Waste Classification AI",
+    page_icon="♻️",
+    layout="centered"
+)
 st.set_page_config(
     page_title="Waste Classification AI",
     page_icon="♻️",

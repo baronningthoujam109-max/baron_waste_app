@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 from PIL import Image
 
 @st.cache_resource
@@ -11,7 +12,7 @@ model = load_model()
 
 class_names = ['glass', 'metal', 'paper', 'plastic']
 
-st.title("♻️ Waste Classification App design by Baron_Ningthoujam")
+st.title("♻️ Waste Classification App designed by Baron Ningthoujam")
 
 uploaded_file = st.file_uploader(
     "Choose an image",
@@ -30,10 +31,6 @@ if uploaded_file is not None:
     img_array = np.expand_dims(img_array, axis=0)
 
     prediction = model.predict(img_array)
-   st.write("### Class Probabilities")
-
-   for cls, prob in zip(class_names, prediction[0]):
-    st.write(f"{cls}: {prob*100:.2f}%")
 
     predicted_class = class_names[np.argmax(prediction)]
     confidence = np.max(prediction) * 100
@@ -41,13 +38,14 @@ if uploaded_file is not None:
     st.success(f"Prediction: {predicted_class}")
     st.write(f"Confidence: {confidence:.2f}%")
 
-    st.write("Raw Prediction:")
-    st.write(prediction)
-    import pandas as pd
+    st.write("### Class Probabilities")
 
-df = pd.DataFrame({
-    "Class": class_names,
-    "Probability (%)": prediction[0] * 100
-})
+    for cls, prob in zip(class_names, prediction[0]):
+        st.write(f"{cls}: {prob*100:.2f}%")
 
-st.write(df)
+    df = pd.DataFrame({
+        "Class": class_names,
+        "Probability (%)": prediction[0] * 100
+    })
+
+    st.write(df)
